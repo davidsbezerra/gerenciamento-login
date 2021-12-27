@@ -1,0 +1,37 @@
+logging:
+  level:
+    br.com.ia.david: INFO
+    org.springframework.boot: INFO
+
+server:
+  port: 9080
+
+spring:
+  datasource:
+    continue-on-error: true
+    hikari:
+      minimum-idle: 2
+    url: jdbc:oracle:thin:/@localhost:1521:xe
+    username: LOGIN_USER
+    password: login_user
+  jackson:
+    time-zone: America/Sao_Paulo
+  jmx:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        default_schema: LOGIN_USER
+  messages:
+    basename: i18n/messages
+  rabbitmq:
+    listener:
+      simple:
+        concurrency: 1
+        default-requeue-rejected: false
+        max-concurrency: 4
+    template:
+      reply-timeout: ${RABBIT_REPLY_TIMEOUT:30000}

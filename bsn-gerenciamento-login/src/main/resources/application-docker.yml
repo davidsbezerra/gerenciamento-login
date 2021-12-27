@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 30
+      connectionTimeout: 10000  
+    url: ${DNS_CONNECTION_STRING}
+    username: null
+    password: null
+  main:
+    banner-mode: "off"
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+    virtual-host: ${RABBIT_VIRTUAL_HOST}

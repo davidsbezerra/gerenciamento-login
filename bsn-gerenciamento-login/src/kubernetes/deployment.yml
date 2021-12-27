@@ -1,0 +1,51 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bsn-gerenciamento-login
+  labels:
+    name: bsn-gerenciamento-login
+    type: api
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate  
+  template:
+      labels:
+        name: bsn-gerenciamento-login
+    spec:
+      volumes:
+      - name: db-wallet
+        secret:
+          secretName: bsn-gerenciamento-login-wallet
+          defaultMode: 0777
+      containers:
+      - name: bsn-gerenciamento-login
+        image: docker-repo.ia.david.com.br/bsn-gerenciamento-login
+        imagePullPolicy: "Always"
+        envFrom:
+        - configMapRef:
+            name: bsn-gerenciamento-login-config
+            optional: true
+        - configMapRef:
+            name: pf-db-connection-strings-config
+        - secretRef:
+            name: pf-rabbitmq-credentials
+        env:
+        - name: JAVA_OPTIONS
+          value: -Duser.country=BR -Duser.language=pt -XX:NewRatio=3 -Doracle.net.wallet_location=/wallet
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 195Mi
+        ports:
+        volumeMounts:
+        - name: db-wallet
+          mountPath: /wallet
