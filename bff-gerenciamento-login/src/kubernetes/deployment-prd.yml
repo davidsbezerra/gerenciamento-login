@@ -1,0 +1,44 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bff-gerenciamento-login
+  labels:
+    name: bff-gerenciamento-login
+    type: api
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate  
+  template:
+    metadata:
+      labels:
+        name: bff-gerenciamento-login
+    spec:
+      containers:
+      - name: bff-gerenciamento-login
+        image: docker-repo.david.ia.com.br/bff-gerenciamento-login
+        imagePullPolicy: "Always"
+        envFrom:
+        - configMapRef:
+            name: bff-gerenciamento-login-config
+            optional: true
+        - secretRef:
+            name: pf-rabbitmq-credentials
+        env:
+        - name: JAVA_OPTIONS
+          value: -Duser.country=BR -Duser.language=pt -XX:NewRatio=3 
+        resources:
+          limits:
+            cpu: 2
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 195Mi
+        ports:
+          - name: app
+            containerPort: 8080

@@ -1,0 +1,92 @@
+stages:
+  - qa
+  - package
+  - deploy 
+
+cache:
+  paths:
+  - target/
+
+junit:
+  stage: qa
+  script:
+    - mvn -U -B clean verify
+  except:
+    - develop
+
+junit-report:
+  stage: qa
+  script:
+    - mvn -U -B clean verify jacoco:report
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print  "instructions covered ", covered, "/", instructions; printf("COBERTURA %.2f%", 100*covered/instructions) }' target/site/jacoco/jacoco.csv
+  artifacts:
+    when: always
+    paths:
+      - 'target/site/jacoco/jacoco.xml'
+    expire_in: 10 mins
+  only:
+    - develop
+    
+sonar:
+  stage: qa
+  script:
+    - mvn -U -B clean verify jacoco:report sonar:sonar -fn
+  only:
+    - /^release.*$/
+
+package:
+  stage: package
+  script:
+    - mvn -B clean package -Dmaven.test.skip=true -DCI_COMMIT_SHA=$CI_COMMIT_SHA
+  artifacts:
+    when: on_success
+    paths:
+      - 'target/Dockerfile'
+      - 'target/*.jar'
+      - 'target/deployment*.yml'
+      - 'target/service.yml'
+    expire_in: 5 mins
+  only:
+    - /^release.*$/
+    - /^develop.*$/
+
+deploy:
+  stage: deploy
+  script:
+    - export PROJECT_VERSION="$(mvn -B -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:exec)"
+    - export CI_PROPERTIES=$(python -c "import urllib; print urllib.quote('''$(env)''')")
+    - cp target/*.yml .
+    - "curl -u $JENKINS_USER_APITOKEN -X POST $JENKINS_JOB_URL --data token=$JENKINS_JOB_TOKEN --data-urlencode json=\"{\\\"parameter\\\": [{\\\"name\\\":\\\"CI_PROPERTIES\\\", \\\"value\\\":\\\"${CI_PROPERTIES}\\\"}]}\""
+  environment:
+    name: dsv
+  artifacts:
+    when: on_success
+    paths:
+      - 'target/Dockerfile'
+      - 'target/*.jar'
+      - 'deployment*.yml'
+      - 'service.yml'  
+    expire_in: 60 mins
+  only:
+    - /^develop.*$/
+
+deploy-tst:
+  stage: deploy
+  script:
+    - export PROJECT_VERSION="$(mvn -B -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive org.codehaus.mojo:exec-maven-plugin:exec)"
+    - export CI_PROPERTIES=$(python -c "import urllib; print urllib.quote('''$(env)''')")
+    - cp target/*.yml .
+    - "curl -u $JENKINS_USER_APITOKEN -X POST $JENKINS_JOB_URL_TST --data token=$JENKINS_JOB_TOKEN --data-urlencode json=\"{\\\"parameter\\\": [{\\\"name\\\":\\\"CI_PROPERTIES\\\", \\\"value\\\":\\\"${CI_PROPERTIES}\\\"}]}\""
+  environment:
+    name: tst
+  artifacts:
+    when: on_success
+    paths:
+      - 'target/Dockerfile'
+      - 'target/*.jar'
+      - 'deployment*.yml'
+      - 'service.yml' 
+    expire_in: 1 days
+  only:
+    - /^release.*$/
+

@@ -1,0 +1,19 @@
+logging:
+  level:
+    root: WARN
+
+server:
+  port: 0
+
+
+
+spring:
+  application:
+    name: bff-gerenciamento-login
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+  main:
+    banner-mode: "off"
+  rabbitmq:
+    connection-timeout: 1

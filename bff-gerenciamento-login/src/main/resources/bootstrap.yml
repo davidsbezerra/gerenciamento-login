@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: WARN 
+
+spring:
+  application:
+    name: bff-gerenciamento-login
+    discovery:
+      enabled: false
+    refresh:
+      enabled: false

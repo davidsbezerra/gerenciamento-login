@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  undertow:
+    worker-threads: 256
+    
+spring:
+  main:
+    banner-mode: "off"
+  rabbitmq:
+    host: ${RABBIT_HOST}
+    username: ${RABBIT_USERNAME}
+    password: ${RABBIT_PASSWORD}
+    virtual-host: ${RABBIT_VIRTUAL_HOST}
+  redis:
+    host: ${REDIS_HOST}
+    password: ${REDIS_PASSWORD}

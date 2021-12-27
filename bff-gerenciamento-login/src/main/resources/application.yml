@@ -1,0 +1,42 @@
+#cache:
+#  ttl:
+#    my-cache: 60 # deve ser exatamente a mesma string do CacheName
+
+logging:
+  level:
+    br.com.ia.david: INFO
+    org.springframework.boot: INFO
+
+server:
+  compression:
+    enabled: true
+  port: 8080
+  servlet:
+    context-path: /bff-gerenciamento-login
+
+spring:
+  jackson:
+    time-zone: America/Sao_Paulo
+  jmx:
+    enabled: false
+  messages:
+    basename: i18n/messages
+  rabbitmq:
+    listener:
+      simple:
+        concurrency: 1
+        default-requeue-rejected: false
+        max-concurrency: 4
+    template:
+      reply-timeout: ${RABBIT_REPLY_TIMEOUT:30000}
+
+springfox:
+  documentation:
+    info:
+      title: BFF Gerenciamento Login
+      description: Documentação do serviço de BFF Gerenciamento Login.
+      version: 1.0
+    base-package: br.com.ia.david.bff.gerenciamento.login
+    apis:
+      - name: Api
+        description: Serviços para ...

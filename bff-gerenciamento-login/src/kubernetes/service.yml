@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bff-gerenciamento-login
+  labels:
+    name: bff-gerenciamento-login
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    name: bff-gerenciamento-login
