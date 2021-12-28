@@ -28,7 +28,7 @@ public interface Messaging {
 
     MessageOutbox INSERIR_LOGIN = new MessageOutbox("gerenciamento-login.inserir.message");
     MessageOutbox EFETUAR_LOGIN = new MessageOutbox("gerenciamento-login.efetuar.message");
-
+    MessageOutbox ENVIAR_COMUNICADO = new MessageOutbox("gerenciamento-login.enviar-comunicado.message");
 
     String QUEUE_RECEIVED_EVENTS = "gerenciamento-login.received-events.queue";
 }

@@ -8,30 +8,29 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.ia.david.bsn.gerenciamento.login.domain.messaging.Messaging;
-import br.com.ia.david.bsn.gerenciamento.login.event.RemoverLoginAmqpEvent;
-import br.com.ia.david.bsn.gerenciamento.login.message.RemoverLoginMessage;
-import br.com.ia.david.bsn.gerenciamento.login.service.InserirLoginService;
-import br.com.ia.david.bsn.gerenciamento.login.service.RemoverLoginService;
+import br.com.ia.david.bsn.gerenciamento.login.event.EnviarComunicadoAmqpEvent;
+import br.com.ia.david.bsn.gerenciamento.login.message.EnviarComunicadoMessage;
+import br.com.ia.david.bsn.gerenciamento.login.service.EnviarComunicadoUsuarioLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RabbitListener(queues = Messaging.QUEUE_REMOVER_LOGIN)
-public class RemoverLojaTotvsGiaListener {
+@RabbitListener(queues = Messaging.QUEUE_ENVIAR_COMUNICADO)
+public class EnviarComunicadoUsuarioListener {
 
     private final AmqpEventListenerHandler handler;
-    private final RemoverLoginService service;
+    private final EnviarComunicadoUsuarioLoginService service;
 
     @RabbitHandler
-    void receive(@Payload final RemoverLoginMessage message, @Headers final MessageHeaders headers) {
+    void receive(@Payload final EnviarComunicadoMessage message, @Headers final MessageHeaders headers) {
 
         log.debug("Mensagem {}", message);
 
         handler.handle(headers,
             message,
-            RemoverLoginAmqpEvent.class,
-            () -> service.remover(message));
+            EnviarComunicadoAmqpEvent.class,
+            () -> service.enviar(message));
     }
 }

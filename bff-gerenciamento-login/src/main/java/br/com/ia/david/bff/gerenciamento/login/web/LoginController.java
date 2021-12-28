@@ -46,7 +46,6 @@ public class LoginController implements LoginApi {
     @GetMapping("/{id}/redis")
     @ResponseStatus(OK)
     public Login buscarUsuarioInseridoRedis(@PathVariable("id") final Long id) {
-
         return buscarUsuarioLogadoNoRedisService.buscar(id);
     }
 }

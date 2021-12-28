@@ -13,6 +13,11 @@ public class ClientErrorException extends AbstractErrorException {
         this.errorType = errorType;
     }
 
+    public ClientErrorException(final ErrorType errorType, final String msg, final Throwable th) {
+        super(msg, th);
+        this.errorType = errorType;
+    }
+
     @Override
     public ErrorType getErrorType() {
         return errorType;

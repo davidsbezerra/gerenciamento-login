@@ -40,6 +40,7 @@ public class MessagingConfiguration {
     Queue receivedEventsQueue() {
         return new Queue(Messaging.QUEUE_RECEIVED_EVENTS);
     }
+
     /**
      * Bindings
      */

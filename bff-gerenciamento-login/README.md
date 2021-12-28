@@ -13,7 +13,7 @@ MRs neste projeto devem passar por aprovação de pelo menos um membro de cada e
 
 ### API
 
-Swagger: [http://localhost:8082/bff-gerenciamento-login/swagger-ui.html](http://localhost:8082/bff-gerenciamento-login/swagger-ui.html)
+Swagger: [http://localhost:8080/bff-gerenciamento-login/swagger-ui.html](http://localhost:8080/bff-gerenciamento-login/swagger-ui.html)
 
 ### Diagrama(s)
 

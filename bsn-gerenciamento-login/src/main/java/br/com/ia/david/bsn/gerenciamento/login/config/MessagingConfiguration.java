@@ -56,6 +56,11 @@ public class MessagingConfiguration {
         return new Queue(Messaging.QUEUE_EFETUAR_LOGIN);
     }
 
+    @Bean
+    Queue enviarComunicadoQueue() {
+        return new Queue(Messaging.QUEUE_ENVIAR_COMUNICADO);
+    }
+
     /**
      * Bindings
      */
@@ -93,5 +98,12 @@ public class MessagingConfiguration {
         return BindingBuilder.bind(efetuarLoginQueue())
             .to(exchange())
             .with(Messaging.EFETUAR_LOGIN.getRoutingKey());
+    }
+
+    @Bean
+    Binding enviarComunicadoQueueToEventsExchangeBinder() {
+        return BindingBuilder.bind(enviarComunicadoQueue())
+            .to(exchange())
+            .with(Messaging.ENVIAR_COMUNICADO.getRoutingKey());
     }
 }

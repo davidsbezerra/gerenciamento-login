@@ -14,6 +14,7 @@ public enum Message {
     LOGIN_EXISTENTE("login.existente"),
     NENHUM_RESULTADO_ENCONTRADO("nenhum.resultado.encontrado"),
     OBJETO_NULO("objeto.nulo"),
+    REQUISICAO_INVALIDA("requisicao.invalida"),
     SENHA_INVALIDA("senha.invalida"),
     SERVICO_INDISPONIVEL("servico.indisponivel");
 

@@ -8,29 +8,29 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.ia.david.bsn.gerenciamento.login.domain.messaging.Messaging;
-import br.com.ia.david.bsn.gerenciamento.login.event.AtualizarLoginAmqpEvent;
-import br.com.ia.david.bsn.gerenciamento.login.message.AtualizarLoginMessage;
-import br.com.ia.david.bsn.gerenciamento.login.service.AtualizarLoginService;
+import br.com.ia.david.bsn.gerenciamento.login.event.RemoverLoginAmqpEvent;
+import br.com.ia.david.bsn.gerenciamento.login.message.RemoverLoginMessage;
+import br.com.ia.david.bsn.gerenciamento.login.service.RemoverLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RabbitListener(queues = Messaging.QUEUE_ATUALIZAR_LOGIN)
-public class AtualizarLojaTotvsGiaListener {
+@RabbitListener(queues = Messaging.QUEUE_REMOVER_LOGIN)
+public class RemoverLoginListener {
 
     private final AmqpEventListenerHandler handler;
-    private final AtualizarLoginService service;
+    private final RemoverLoginService service;
 
     @RabbitHandler
-    void receive(@Payload final AtualizarLoginMessage message, @Headers final MessageHeaders headers) {
+    void receive(@Payload final RemoverLoginMessage message, @Headers final MessageHeaders headers) {
 
         log.debug("Mensagem {}", message);
 
         handler.handle(headers,
             message,
-            AtualizarLoginAmqpEvent.class,
-            () -> service.atualizar(message));
+            RemoverLoginAmqpEvent.class,
+            () -> service.remover(message));
     }
 }
