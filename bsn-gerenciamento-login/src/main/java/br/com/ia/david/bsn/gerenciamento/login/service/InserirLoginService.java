@@ -2,6 +2,8 @@ package br.com.ia.david.bsn.gerenciamento.login.service;
 
 import static java.util.Optional.ofNullable;
 
+import java.util.Objects;
+
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import br.com.ia.david.bsn.gerenciamento.login.repository.LoginEntityRepository;
 import br.com.ia.david.bsn.gerenciamento.login.response.InserirLoginResponse;
 import br.com.ia.david.bsn.gerenciamento.login.service.support.MessageService;
 import br.com.ia.david.bsn.gerenciamento.login.validator.InserirLoginValidator;
+import liquibase.util.BooleanUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,11 +37,14 @@ public class InserirLoginService {
 
         log.info("Inserindo login {}.", message.getLogin().getLogin());
 
-        //TODO: Verificar se usuário já existe na base;
+        ofNullable(Objects.isNull(repository.findByLogin(message.getLogin().getLogin())))
+            .filter(BooleanUtils::isTrue)
+            .orElseThrow(() -> new ClientErrorException(ErrorType.BUSINESS,
+                messageService.get(Message.LOGIN_EXISTENTE)));
 
         final LoginEntity loginEntity = repository.save(
             Mappers.getMapper(LoginEntityMapper.class)
-            .apply(message.getLogin()));
+                .apply(message.getLogin()));
 
         log.info("Login {} inserido. id {}.", loginEntity.getLogin(), loginEntity.getId());
 

@@ -1,12 +1,10 @@
 package br.com.ia.david.bsn.gerenciamento.login.validator;
 
 import static br.com.ia.david.bsn.gerenciamento.login.domain.ErrorType.VALIDATION;
-import static br.com.ia.david.bsn.gerenciamento.login.domain.Message.ID_DEVE_SER_NULO;
 import static br.com.ia.david.bsn.gerenciamento.login.domain.Message.LOGIN_INVALIDO;
 import static br.com.ia.david.bsn.gerenciamento.login.domain.Message.OBJETO_NULO;
 import static br.com.ia.david.bsn.gerenciamento.login.domain.Message.SENHA_INVALIDA;
 import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
 
 import java.util.function.Consumer;
 
@@ -14,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import br.com.ia.david.bsn.gerenciamento.login.exception.ClientErrorException;
-import br.com.ia.david.bsn.gerenciamento.login.message.InserirLoginMessage;
+import br.com.ia.david.bsn.gerenciamento.login.message.AtualizarLoginMessage;
 import br.com.ia.david.bsn.gerenciamento.login.service.support.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class InserirLoginValidator implements Consumer<InserirLoginMessage> {
+public class AtualizarLoginValidator implements Consumer<AtualizarLoginMessage> {
 
     private final MessageService messageService;
 
     @Override
-    public void accept(final InserirLoginMessage message) {
+    public void accept(final AtualizarLoginMessage message) {
 
         if (isNull(message)) {
             log.warn("Objeto nulo.");
@@ -39,9 +37,9 @@ public class InserirLoginValidator implements Consumer<InserirLoginMessage> {
             throw new ClientErrorException(VALIDATION, messageService.get(OBJETO_NULO));
         }
 
-        if (nonNull(message.getLogin().getId())) {
-            log.warn("O ID deve ser nulo");
-            throw new ClientErrorException(VALIDATION, messageService.get(ID_DEVE_SER_NULO));
+        if (isNull(message.getLogin().getId())) {
+            log.warn("ID Nulo.");
+            throw new ClientErrorException(VALIDATION, messageService.get(OBJETO_NULO));
         }
 
         if (StringUtils.isBlank(message.getLogin().getLogin())) {

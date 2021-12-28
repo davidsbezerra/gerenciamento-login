@@ -46,6 +46,11 @@ public class MessagingConfiguration {
         return new Queue(Messaging.QUEUE_REMOVER_LOGIN);
     }
 
+    @Bean
+    Queue atualizarLoginQueue() {
+        return new Queue(Messaging.QUEUE_ATUALIZAR_LOGIN);
+    }
+
     /**
      * Bindings
      */
@@ -66,8 +71,15 @@ public class MessagingConfiguration {
 
     @Bean
     Binding removerLoginQueueToEventsExchangeBinder() {
-        return BindingBuilder.bind(inserirLoginQueue())
+        return BindingBuilder.bind(removerLoginQueue())
             .to(exchange())
             .with(Messaging.REMOVER_LOGIN.getRoutingKey());
+    }
+
+    @Bean
+    Binding atualizarLoginQueueToEventsExchangeBinder() {
+        return BindingBuilder.bind(atualizarLoginQueue())
+            .to(exchange())
+            .with(Messaging.ATUALIZAR_LOGIN.getRoutingKey());
     }
 }

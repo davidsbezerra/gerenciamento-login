@@ -9,5 +9,6 @@ import br.com.ia.david.bsn.gerenciamento.login.entity.LoginEntity;
 public interface LoginEntityRepository extends JpaRepository<LoginEntity, Long> {
 
     LoginEntity findByLoginAndPassword(final String login, final String password);
+    LoginEntity findByLogin(final String login);
 
 }
