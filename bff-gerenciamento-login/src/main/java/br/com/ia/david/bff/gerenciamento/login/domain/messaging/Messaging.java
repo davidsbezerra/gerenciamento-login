@@ -9,6 +9,8 @@ public interface Messaging {
 
     EventInbox INSERIR_LOGIN_SUCCESS = new EventInbox("gerenciamento-login.inserir.success.event");
     EventInbox INSERIR_LOGIN_ERROR = new EventInbox("gerenciamento-login.inserir.error.event");
+    EventInbox EFETUAR_LOGIN_SUCCESS = new EventInbox("gerenciamento-login.efetuar.success.event");
+    EventInbox EFETUAR_LOGIN_ERROR = new EventInbox("gerenciamento-login.efetuar.error.event");
     EventInbox REMOVER_LOGIN_SUCCESS = new EventInbox("gerenciamento-login.remover.success.event");
     EventInbox REMOVER_LOGIN_ERROR = new EventInbox("gerenciamento-login.remover.error.event");
     EventInbox ATUALIZAR_LOGIN_SUCCESS = new EventInbox("gerenciamento-login.atualizar.success.event");
@@ -25,6 +27,8 @@ public interface Messaging {
     String QUEUE_GFE = "gfe.armazenar-mensagem-gfe.queue";
 
     MessageOutbox INSERIR_LOGIN = new MessageOutbox("gerenciamento-login.inserir.message");
+    MessageOutbox EFETUAR_LOGIN = new MessageOutbox("gerenciamento-login.efetuar.message");
+
 
     String QUEUE_RECEIVED_EVENTS = "gerenciamento-login.received-events.queue";
 }

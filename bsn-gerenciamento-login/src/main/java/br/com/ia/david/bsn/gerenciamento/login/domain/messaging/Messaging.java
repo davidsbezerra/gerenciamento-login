@@ -8,6 +8,7 @@ public interface Messaging {
     MessageInbox INSERIR_LOGIN = new MessageInbox("gerenciamento-login.inserir.message");
     MessageInbox REMOVER_LOGIN = new MessageInbox("gerenciamento-login.remover.message");
     MessageInbox ATUALIZAR_LOGIN = new MessageInbox("gerenciamento-login.atualizar.message");
+    MessageInbox EFETUAR_LOGIN = new MessageInbox("gerenciamento-login.efetuar.message");
 
 
     MessageOutbox GFE = new MessageOutbox("gfe.armazenar-mensagem-gfe.message");
@@ -15,6 +16,8 @@ public interface Messaging {
     String QUEUE_INSERIR_LOGIN = "gerenciamento-login.inserir.queue";
     String QUEUE_REMOVER_LOGIN = "gerenciamento-login.remover.queue";
     String QUEUE_ATUALIZAR_LOGIN = "gerenciamento-login.atualizar.queue";
+    String QUEUE_EFETUAR_LOGIN = "gerenciamento-login.efetuar.queue";
+
 
     String INSERIR_LOGIN_SUCCESS = "gerenciamento-login.inserir.success.event";
     String INSERIR_LOGIN_ERROR = "gerenciamento-login.inserir.error.event";
@@ -22,6 +25,8 @@ public interface Messaging {
     String REMOVER_LOGIN_ERROR = "gerenciamento-login.remover.error.event";
     String ATUALIZAR_LOGIN_SUCCESS = "gerenciamento-login.atualizar.success.event";
     String ATUALIZAR_LOGIN_ERROR = "gerenciamento-login.atualizar.error.event";
+    String EFETUAR_LOGIN_SUCCESS = "gerenciamento-login.efetuar.success.event";
+    String EFETUAR_LOGIN_ERROR = "gerenciamento-login.efetuar.error.event";
 
     String AMQ_TOPIC = "amq.topic";
 

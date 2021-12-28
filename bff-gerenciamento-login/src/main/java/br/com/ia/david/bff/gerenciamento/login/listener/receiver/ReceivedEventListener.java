@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.com.ia.david.bff.gerenciamento.login.domain.messaging.Messaging;
+import br.com.ia.david.bff.gerenciamento.login.event.EfetuarLoginAmqpEvent;
+import br.com.ia.david.bff.gerenciamento.login.event.EfetuarLoginAmqpEvent.EfetuarLoginResponse;
 import br.com.ia.david.bff.gerenciamento.login.event.InserirLoginAmqpEvent;
-import br.com.ia.david.bff.gerenciamento.login.event.InserirLoginAmqpEvent.InserirLoginResponse;
 import br.com.ia.david.bff.gerenciamento.login.redis.entity.LoginEntity;
 import br.com.ia.david.bff.gerenciamento.login.redis.repository.LoginEntityRedisRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,17 @@ public class ReceivedEventListener {
 
         log.info("Evento: {}", event);
         if (nonNull(event) && isNull(event.getErro())) {
+            //TODO: FLUXO DE SUCESSO AO INSERIR LOGIN
+        }
+    }
 
-            ofNullable(event.getResultado()).map(InserirLoginResponse::getLogin)
+    @RabbitHandler
+    void receive(final EfetuarLoginAmqpEvent event) {
+
+        log.info("Evento: {}", event);
+        if (nonNull(event) && isNull(event.getErro())) {
+
+            ofNullable(event.getResultado()).map(EfetuarLoginResponse::getLogin)
                 .ifPresent(l -> repository.save(
                     LoginEntity.builder()
                         .ttl(ttlLogin)

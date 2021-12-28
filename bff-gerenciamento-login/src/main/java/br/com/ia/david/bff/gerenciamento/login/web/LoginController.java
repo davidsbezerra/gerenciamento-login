@@ -1,8 +1,7 @@
 package br.com.ia.david.bff.gerenciamento.login.web;
 
 import static org.springframework.http.HttpStatus.ACCEPTED;
-
-import java.util.Optional;
+import static org.springframework.http.HttpStatus.OK;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ia.david.bff.gerenciamento.login.domain.login.Login;
-import br.com.ia.david.bff.gerenciamento.login.redis.entity.LoginEntity;
-import br.com.ia.david.bff.gerenciamento.login.redis.repository.LoginEntityRedisRepository;
+import br.com.ia.david.bff.gerenciamento.login.request.EfetuarLoginRequest;
 import br.com.ia.david.bff.gerenciamento.login.request.InserirLoginRequest;
+import br.com.ia.david.bff.gerenciamento.login.service.BuscarUsuarioLogadoNoRedisService;
+import br.com.ia.david.bff.gerenciamento.login.service.EfetuarLoginService;
 import br.com.ia.david.bff.gerenciamento.login.service.InserirLoginService;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class LoginController implements LoginApi {
 
     private final InserirLoginService inserirLoginService;
-    private final LoginEntityRedisRepository repository;
+    private final EfetuarLoginService efetuarLoginService;
+    private final BuscarUsuarioLogadoNoRedisService buscarUsuarioLogadoNoRedisService;
 
     @Override
     @PostMapping
@@ -35,17 +36,17 @@ public class LoginController implements LoginApi {
     }
 
     @Override
-    @GetMapping("/{id}/redis")
+    @GetMapping()
     @ResponseStatus(ACCEPTED)
-    public Login buscarUsuarioInseridoRedis(@PathVariable("id") final Long id) {
-        final Optional<LoginEntity> redisEntity = repository.findById(id);
+    public void efetuarLogin(@RequestBody final EfetuarLoginRequest request) {
+        efetuarLoginService.efetuar(request);
+    }
 
-        return redisEntity.map(re -> Login.builder()
-                .login(re.getLogin())
-                .id(re.getId())
-                .password(re.getPassword())
-                .name(re.getName())
-                .build())
-            .orElse(null);
+    @Override
+    @GetMapping("/{id}/redis")
+    @ResponseStatus(OK)
+    public Login buscarUsuarioInseridoRedis(@PathVariable("id") final Long id) {
+
+        return buscarUsuarioLogadoNoRedisService.buscar(id);
     }
 }

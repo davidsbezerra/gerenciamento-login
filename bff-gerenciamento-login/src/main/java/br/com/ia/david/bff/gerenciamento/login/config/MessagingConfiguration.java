@@ -64,4 +64,18 @@ public class MessagingConfiguration {
             .to(eventsExchange())
             .with(Messaging.INSERIR_LOGIN_ERROR.getRoutingKey());
     }
+
+    @Bean
+    Binding efetuarLoginSucessoQueueToExchangeBinder() {
+        return BindingBuilder.bind(receivedEventsQueue())
+            .to(eventsExchange())
+            .with(Messaging.EFETUAR_LOGIN_SUCCESS.getRoutingKey());
+    }
+
+    @Bean
+    Binding efetuarLoginErroQueueToExchangeBinder() {
+        return BindingBuilder.bind(receivedEventsQueue())
+            .to(eventsExchange())
+            .with(Messaging.EFETUAR_LOGIN_ERROR.getRoutingKey());
+    }
 }
