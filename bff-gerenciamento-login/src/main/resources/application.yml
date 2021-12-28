@@ -1,6 +1,7 @@
-#cache:
-#  ttl:
-#    my-cache: 60 # deve ser exatamente a mesma string do CacheName
+
+redis:
+  gerenciamento-login:
+    ttl: ${TTL_TECLADO_VIRTUAL:600} # 10 minutos
 
 logging:
   level:

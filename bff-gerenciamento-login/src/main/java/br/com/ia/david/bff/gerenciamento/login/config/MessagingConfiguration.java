@@ -36,7 +36,10 @@ public class MessagingConfiguration {
         return new Queue(Messaging.QUEUE_GFE);
     }
 
-
+    @Bean
+    Queue receivedEventsQueue() {
+        return new Queue(Messaging.QUEUE_RECEIVED_EVENTS);
+    }
     /**
      * Bindings
      */
@@ -46,5 +49,19 @@ public class MessagingConfiguration {
         return BindingBuilder.bind(gfeQueue())
             .to(new TopicExchange(Messaging.AMQ_TOPIC))
             .with(Messaging.GFE.getRoutingKey());
+    }
+
+    @Bean
+    Binding inserirLoginSucessoQueueToExchangeBinder() {
+        return BindingBuilder.bind(receivedEventsQueue())
+            .to(eventsExchange())
+            .with(Messaging.INSERIR_LOGIN_SUCCESS.getRoutingKey());
+    }
+
+    @Bean
+    Binding inserirLoginErroQueueToExchangeBinder() {
+        return BindingBuilder.bind(receivedEventsQueue())
+            .to(eventsExchange())
+            .with(Messaging.INSERIR_LOGIN_ERROR.getRoutingKey());
     }
 }
