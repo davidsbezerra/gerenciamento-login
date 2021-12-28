@@ -17,4 +17,6 @@ public interface Messaging {
     
     String QUEUE_GFE = "gfe.armazenar-mensagem-gfe.queue";
 
+    MessageOutbox INSERIR_LOGIN = new MessageOutbox("gerenciamento-login.inserir.message");
+
 }
