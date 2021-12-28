@@ -5,7 +5,6 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.ia.david.bsn.gerenciamento.login.annotations.AmqpObject;
-import br.com.ia.david.bsn.gerenciamento.login.domain.login.Login;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,8 +12,8 @@ import lombok.Getter;
 @Builder
 @AmqpObject
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class InserirLoginMessage implements Serializable {
+public final class RemoverLoginMessage implements Serializable {
 
-    private static final long serialVersionUID = -8861326363502047441L;
-    private final Login login;
+    private static final long serialVersionUID = -1581637191891639179L;
+    private final Long id;
 }

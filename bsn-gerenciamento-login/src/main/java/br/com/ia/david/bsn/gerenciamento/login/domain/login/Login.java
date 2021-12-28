@@ -14,13 +14,13 @@ public class Login implements Serializable {
 
     private static final long serialVersionUID = -8236399378645617426L;
 
-    private Long id;
-    private String name;
-    private String login;
-    private String password;
-    private OffsetDateTime createdDate;
-    private OffsetDateTime updatedDate;
-    private String email;
-    private Boolean admin;
+    private final Long id;
+    private final String name;
+    private final String login;
+    private final String password;
+    private final OffsetDateTime createdDate;
+    private final OffsetDateTime updatedDate;
+    private final String email;
+    private final Boolean admin;
 
 }

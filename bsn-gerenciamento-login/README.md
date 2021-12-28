@@ -13,7 +13,7 @@ MRs neste projeto devem passar por aprovação de pelo menos um membro de cada e
 ### Listeners
 
 #### - Inserir Login
-_Serviço para nserir de dados dde login._
+_Serviço para nserir de dados de login._
 
 * Rota: `gerenciamento-login.inserir.message` _(request)_
 * Mensagem: _InserirLoginMessage_
@@ -27,19 +27,54 @@ _Serviço para nserir de dados dde login._
 }
 ```
 
+* Rota de sucesso: `gerenciamento-login.inserir.success.event`
+* Rota de erro: `gerenciamento-login.inserir.error.event`
+* Evento: `InserirLoginAmqpEvent`
 * Resposta: _InserirLoginResponse_
 
 ```json
-{ 
-  "login": {
-      "name": "String",
-      "login": "String",
-      "password": "String",
-      "createdDate": "OffsetDateTime",
-      "updatedDate": "OffsetDateTime",
-      "email": "String",
-      "admin": "Boolean"
-  }
+{
+    "requisicao": InserirLoginAmqpEvent,
+    "erro": ErrorResponse,
+    "resultado": {
+        "login": {
+            "name": "String",
+            "login": "String",
+            "password": "String",
+            "createdDate": "OffsetDateTime",
+            "updatedDate": "OffsetDateTime",
+            "email": "String",
+            "admin": "Boolean"
+        }
+    }
+}
+```
+
+#### - Remover Login
+_Serviço para remover de dados de login._
+
+* Rota: `gerenciamento-login.remover.message` _(request)_
+* Mensagem: _RemoverLoginMessage_
+
+```json
+{
+    "id" : "Long"
+}
+```
+
+*
+* Rota de sucesso: `gerenciamento-login.remover.success.event`
+* Rota de erro: `gerenciamento-login.remover.error.event`
+* Evento: `RemoverLoginAmqpEvent`
+* Resposta: _RemoverLoginResponse_
+
+```json
+{
+    "requisicao": RemoverLoginAmqpEvent,
+    "erro": ErrorResponse,
+    "resultado": {
+        "sucesso": boolean
+    }
 }
 ```
 
