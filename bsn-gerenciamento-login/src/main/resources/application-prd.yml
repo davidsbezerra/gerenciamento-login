@@ -1,0 +1,16 @@
+logging:
+  level:
+    br.com.ia.david: INFO
+    org.springframework.boot: INFO
+
+server:
+  port: 0
+
+spring:
+  datasource:
+    continue-on-error: true
+    hikari:
+      minimum-idle: 2
+    url: jdbc:oracle:thin:/@localhost:1521:xe
+    username: LOGIN_USER
+    password: login_user

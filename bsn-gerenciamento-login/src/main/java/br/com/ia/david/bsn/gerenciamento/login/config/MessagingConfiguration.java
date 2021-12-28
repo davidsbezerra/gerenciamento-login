@@ -16,12 +16,12 @@ public class MessagingConfiguration {
      * Exchanges
      **/
 
-    //@Bean
+    @Bean
     TopicExchange exchange() {
         return new TopicExchange(Messaging.EXCHANGE);
     }
 
-    //@Bean
+    @Bean
     TopicExchange eventsExchange() {
         return new TopicExchange(Messaging.EXCHANGE_EVENTS);
     }
@@ -36,6 +36,11 @@ public class MessagingConfiguration {
         return new Queue(Messaging.QUEUE_GFE);
     }
 
+    @Bean
+    Queue inserirLoginQueue() {
+        return new Queue(Messaging.QUEUE_INSERIR_LOGIN);
+    }
+
 
     /**
      * Bindings
@@ -47,4 +52,12 @@ public class MessagingConfiguration {
             .to(new TopicExchange(Messaging.AMQ_TOPIC))
             .with(Messaging.GFE.getRoutingKey());
     }
+
+    @Bean
+    Binding inserirLoginQueueToEventsExchangeBinder() {
+        return BindingBuilder.bind(inserirLoginQueue())
+            .to(exchange())
+            .with(Messaging.INSERIR_LOGIN.getRoutingKey());
+    }
+
 }

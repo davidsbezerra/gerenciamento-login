@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+						http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="20211227-2054-001" author="David">
+		<createTable tableName="LOGIN">
+
+			<column name="ID" type="NUMBER(10)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+
+			<column name="NAME" type="VARCHAR(40)">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="LOGIN" type="VARCHAR(20)">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="PASSWORD" type="VARCHAR(20)">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="created_date" type="DATETIME">
+			</column>
+
+			<column name="updated_date" type="DATETIME">
+			</column>
+
+			<column name="email" type="VARCHAR(40)">
+			</column>
+
+			<column name="ADMIN" type="NUMBER(1)">
+			</column>
+
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20211227-2054-002" author="David">
+		<createSequence sequenceName="LOGIN_SEQ" startValue="1" incrementBy="1"/>
+	</changeSet>
+
+	<changeSet id="20211227-2054-003" author="David">
+		<createIndex indexName="IDX_LOGIN" tableName="LOGIN" unique="true">
+			<column name="LOGIN"/>
+		</createIndex>
+	</changeSet>
+
+</databaseChangeLog>

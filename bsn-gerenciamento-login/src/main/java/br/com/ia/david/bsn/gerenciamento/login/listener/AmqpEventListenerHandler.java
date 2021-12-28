@@ -40,7 +40,7 @@ class AmqpEventListenerHandler {
 
         } catch (final Exception e) { // NOSONAR
             final ErrorResponse errorResponse = ErrorResponse.build(e);
-            response.setErro(errorResponse);
+            response.setErro(errorResponse); e.printStackTrace();
         }
 
         final Optional<Address> replyTo = ofNullable(headers.get(AmqpHeaders.REPLY_TO))

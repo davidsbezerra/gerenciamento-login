@@ -1,7 +1,7 @@
 target/
 .mvn/
-src/database/log
-src/database/lib
+src/main/resources/db/log
+src/main/resources/db/lib
 
 ### VSCode ###
 .vscode

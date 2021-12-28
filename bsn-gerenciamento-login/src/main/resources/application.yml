@@ -7,6 +7,10 @@ server:
   port: 9080
 
 spring:
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: classpath:db/changelog/changelog-master.xml
   datasource:
     continue-on-error: true
     hikari:
